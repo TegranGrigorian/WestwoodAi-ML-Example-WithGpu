@@ -3,7 +3,7 @@ from ultralytics import YOLO
 import zipfile
 import boto3
 import os
-from sns import sns
+#from sns import sns
 
 class YOLOTrainer:
     def __init__(self, model_path, yaml_file, epochs, bucket_name):
@@ -13,7 +13,7 @@ class YOLOTrainer:
         self.bucket_name = bucket_name
         self.s3_client = boto3.client('s3')
         self._configure_logging()
-        self.sns_instance = sns() #these are at the default values, insert parameters to chagne, param1-arn, param2-message
+        #self.sns_instance = sns() #these are at the default values, insert parameters to chagne, param1-arn, param2-message
 
 
     def _configure_logging(self):
@@ -38,8 +38,8 @@ class YOLOTrainer:
             logging.info(f"Starting training for {self.epochs} epochs using data file '{self.yaml_file}' on device {device}...")
             model.train(data=self.yaml_file, epochs=self.epochs, device=device)
 
-            self.sns_instance.send_sns(topic_arn=sns_topic_arn, 
-                                       message=f"Training completed for YOLO model.")
+            #self.sns_instance.send_sns(topic_arn=sns_topic_arn, 
+            #                           message=f"Training completed for YOLO model.")
             logging.info("Training completed successfully.")
 
         except FileNotFoundError as e:

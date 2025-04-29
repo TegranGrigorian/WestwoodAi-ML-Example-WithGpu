@@ -34,7 +34,7 @@ def main():
     # Initialize handlers
     data_handler = S3DataHandler(bucket_name)
     trainer = YOLOTrainer(model_path, yaml_file, epochs, bucket_name)
-    sns_instance = sns()
+    #sns_instance = sns()
     ec2_shutdown = Ec2Shutdown()
 
     try:
@@ -62,11 +62,11 @@ def main():
         trainer.upload_results(zip_path=results_zip_path, s3_key=s3_results_key)
 
         logging.info("Step 7: Sending SNS notification...")
-        sns_instance.send_sns(topic_arn=sns_topic_arn, message=sns_message)
+        #sns_instance.send_sns(topic_arn=sns_topic_arn, message=sns_message)
 
         logging.info("Step 8: Shutting down EC2 instance...")
         logging.info("Process completed successfully, and EC2 instance is shutting down.")
-        ec2_shutdown.shutdown()
+        ##ec2_shutdown.shutdown()
 
     except Exception as e:
         logging.error(f"An error occurred: {e}", exc_info=True)
